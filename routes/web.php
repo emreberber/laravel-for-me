@@ -11,9 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'AnasayfaController@index');
 
 Route::get('users/{name}/{id?}', function ($name, $id=0) {
     return "name : $name -> $id";
