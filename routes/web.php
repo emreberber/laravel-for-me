@@ -14,3 +14,11 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('users/{name}/{id?}', function ($name, $id=0) {
+    return "name : $name -> $id";
+})->name('users');
+
+Route::get('detail', function () {
+    return redirect()->route('users', ['name'=>'emre', 'id'=>7]);
+});
