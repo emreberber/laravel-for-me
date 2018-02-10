@@ -9,7 +9,7 @@
 | routes are loaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!
 |
-*/
+ */
 
 Route::get('/', 'AnasayfaController@index');
 
@@ -24,4 +24,3 @@ Route::group(['prefix' => 'kullanici'], function () {
     Route::get('/oturumac', 'KullaniciController@giris_form')->name('kullanici.oturumac');
     Route::get('/kaydol', 'KullaniciController@kaydol_form')->name('kullanici.kaydol');
 });
-
