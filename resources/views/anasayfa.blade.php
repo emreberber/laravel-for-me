@@ -20,29 +20,21 @@
             <div class="col-md-6">
                 <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
                     <ol class="carousel-indicators">
-                        <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-                        <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-                        <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+                        @for($i=0; $i<count($urunler_slider); $i++)
+                            <li data-target="#carousel-example-generic" data-slide-to="{{ $i }}" class="{{ $i == 0 ? 'active' : '' }}"></li>
+                        @endfor
                     </ol>
                     <div class="carousel-inner" role="listbox">
-                        <div class="item active">
-                            <img src="http://lorempixel.com/640/400/food/1" alt="...">
-                            <div class="carousel-caption">
-                                Slide 1
+
+                        @foreach ($urunler_slider as $index => $urun)
+                            <div class="item {{ $index == 0 ? 'active' : '' }}">
+                                <img src="http://via.placeholder.com/640x400?text=UrunResmi" alt="...">
+                                <div class="carousel-caption">
+                                    {{ $urun->urun_adi }}
+                                </div>
                             </div>
-                        </div>
-                        <div class="item">
-                            <img src="http://lorempixel.com/640/400/food/2" alt="...">
-                            <div class="carousel-caption">
-                                Slide 2
-                            </div>
-                        </div>
-                        <div class="item">
-                            <img src="http://lorempixel.com/640/400/food/3" alt="...">
-                            <div class="carousel-caption">
-                                Slide 3
-                            </div>
-                        </div>
+                        @endforeach
+                        
                     </div>
                     <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
                         <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
@@ -58,9 +50,10 @@
                 <div class="panel panel-default" id="sidebar-product">
                     <div class="panel-heading">Günün Fırsatı</div>
                     <div class="panel-body">
-                        <a href="#">
-                            <img src="http://lorempixel.com/400/485/food/1" class="img-responsive">
-                        </a>
+                        <a href="{{ route('urun', $urun_gunun_firsati->slug) }}">
+                            <img src="http://via.placeholder.com/400x485?text=UrunResmi" class="img-responsive">
+                            {{ $urun_gunun_firsati->urun_adi }}
+                        </a>          
                     </div>
                 </div>
             </div>
@@ -72,26 +65,17 @@
                 <div class="panel-heading">Öne Çıkan Ürünler</div>
                 <div class="panel-body">
                     <div class="row">
-                        <div class="col-md-3 product">
-                            <a href="#"><img src="http://lorempixel.com/400/400/food/1"></a>
-                            <p><a href="#">Ürün adı</a></p>
-                            <p class="price">129 ₺</p>
-                        </div>
-                        <div class="col-md-3 product">
-                            <a href="#"><img src="http://lorempixel.com/400/400/food/2"></a>
-                            <p><a href="#">Ürün adı</a></p>
-                            <p class="price">129 ₺</p>
-                        </div>
-                        <div class="col-md-3 product">
-                            <a href="#"><img src="http://lorempixel.com/400/400/food/3"></a>
-                            <p><a href="#">Ürün adı</a></p>
-                            <p class="price">129 ₺</p>
-                        </div>
-                        <div class="col-md-3 product">
-                            <a href="#"><img src="http://lorempixel.com/400/400/food/4"></a>
-                            <p><a href="#">Ürün adı</a></p>
-                            <p class="price">129 ₺</p>
-                        </div>
+
+                        @foreach ($urunler_one_cikan as $urun)
+                            <div class="col-md-3 product">
+                                <a href="{{ route('urun', $urun->slug) }}">
+                                    <img src="http://via.placeholder.com/400x400?text=UrunResmi">
+                                </a>
+                                <p><a href="{{ route('urun', $urun->slug) }}">{{ $urun->urun_adi }}</a></p>
+                                <p class="price">{{ $urun->fiyati }} ₺</p>
+                            </div>
+                        @endforeach
+
                     </div>
                 </div>
             </div>
@@ -102,26 +86,17 @@
                 <div class="panel-heading">Çok Satan Ürünler</div>
                 <div class="panel-body">
                     <div class="row">
-                        <div class="col-md-3 product">
-                            <a href="#"><img src="http://lorempixel.com/400/400/food/1"></a>
-                            <p><a href="#">Ürün adı</a></p>
-                            <p class="price">129 ₺</p>
-                        </div>
-                        <div class="col-md-3 product">
-                            <a href="#"><img src="http://lorempixel.com/400/400/food/2"></a>
-                            <p><a href="#">Ürün adı</a></p>
-                            <p class="price">129 ₺</p>
-                        </div>
-                        <div class="col-md-3 product">
-                            <a href="#"><img src="http://lorempixel.com/400/400/food/3"></a>
-                            <p><a href="#">Ürün adı</a></p>
-                            <p class="price">129 ₺</p>
-                        </div>
-                        <div class="col-md-3 product">
-                            <a href="#"><img src="http://lorempixel.com/400/400/food/4"></a>
-                            <p><a href="#">Ürün adı</a></p>
-                            <p class="price">129 ₺</p>
-                        </div>
+
+                        @foreach ($urunler_cok_satan as $urun)
+                            <div class="col-md-3 product">
+                                <a href="{{ $urun->slug }}">
+                                    <img src="http://via.placeholder.com/400x400?text=UrunResmi">
+                                </a>
+                                <p><a href="{{ $urun->slug }}">{{ $urun->urun_adi }}</a></p>
+                                <p class="price">{{ $urun->fiyati }} ₺</p>
+                            </div>
+                        @endforeach
+
                     </div>
                 </div>
             </div>
@@ -131,26 +106,15 @@
                 <div class="panel-heading">İndirimli Ürünler</div>
                 <div class="panel-body">
                     <div class="row">
-                        <div class="col-md-3 product">
-                            <a href="#"><img src="http://lorempixel.com/400/400/food/1"></a>
-                            <p><a href="#">Ürün adı</a></p>
-                            <p class="price">129 ₺</p>
-                        </div>
-                        <div class="col-md-3 product">
-                            <a href="#"><img src="http://lorempixel.com/400/400/food/2"></a>
-                            <p><a href="#">Ürün adı</a></p>
-                            <p class="price">129 ₺</p>
-                        </div>
-                        <div class="col-md-3 product">
-                            <a href="#"><img src="http://lorempixel.com/400/400/food/3"></a>
-                            <p><a href="#">Ürün adı</a></p>
-                            <p class="price">129 ₺</p>
-                        </div>
-                        <div class="col-md-3 product">
-                            <a href="#"><img src="http://lorempixel.com/400/400/food/4"></a>
-                            <p><a href="#">Ürün adı</a></p>
-                            <p class="price">129 ₺</p>
-                        </div>
+                        @foreach ($urunler_indirimli as $urun)
+                            <div class="col-md-3 product">
+                                <a href="{{ $urun->slug }}">
+                                    <img src="http://via.placeholder.com/400x400?text=UrunResmi">
+                                </a>
+                                <p><a href="{{ $urun->slug }}">{{ $urun->urun_adi }}</a></p>
+                                <p class="price">{{ $urun->fiyati }} ₺</p>
+                            </div>
+                        @endforeach
                     </div>
                 </div>
             </div>

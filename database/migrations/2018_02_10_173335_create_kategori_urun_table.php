@@ -13,6 +13,7 @@ class CreateKategoriUrunTable extends Migration
      */
     public function up()
     {
+        
         Schema::create('kategori_urun', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('kategori_id')->unsigned();  // negatif olanları almıyoruz
@@ -23,6 +24,7 @@ class CreateKategoriUrunTable extends Migration
             // onDelete('cascade') ile urun veya kategori silinirse onunla ilişkili verileri de siler
             // orneğin kategori sildin ona ait urunleri de bu tabloda silecektir.
         });
+        
     }
 
     /**

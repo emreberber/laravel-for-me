@@ -13,12 +13,12 @@ class UrunTableSeeder extends Seeder
      */
     public function run(Faker\Generator $faker)
     {
-        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        DB::statement('SET FOREIGN_KEY_CHECKS=0; ');
+        
         Urun::truncate();  // Urun tablomuzu tamamen boşaltmış olduk
         // Bu komutla beraber tekrar seed yaptığımızda kaldığı yerden devam etmek yerine tüm tabloyu silip
         // verileri tabloya yazacaktır.
         UrunDetay::truncate();
-
         
         for($i=0; $i<30; $i++){
             $urun_adi = $faker->streetName();
@@ -37,6 +37,6 @@ class UrunTableSeeder extends Seeder
                 'goster_indirimli' => rand(0,1),
             ]);
         }
-        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+        DB::statement('SET FOREIGN_KEY_CHECKS=1; ');
     }
 }

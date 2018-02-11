@@ -11,4 +11,14 @@ class UrunController extends Controller
         $kategoriler = $urun->kategoriler()->distinct()->get();
         return view('urun', compact('urun', 'kategoriler'));
     }
+
+    public function ara(){
+        $aranan  = request()->input('aranan');
+        $urunler = Urun::where('urun_adi', 'like', "%$aranan%") // Cift tırnaklar icinde yazmak gerekiyor.    
+        ->orWhere('aciklama', 'like', "%$aranan%")
+        ->paginate(8);  // bir sayfada 8 kayıt göster
+        // ->simplePaginate(2)  önceki - sonraki şeklinde
+        request()->flash(); // oturum icinde session saklar
+        return view('arama', compact('urunler'));
+    }
 }
