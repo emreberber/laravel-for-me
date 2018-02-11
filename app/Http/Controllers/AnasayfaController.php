@@ -8,7 +8,7 @@ use App\Models\Kategori;
 class AnasayfaController extends Controller
 {
     public function index(){
-        $kategoriler = Kategori::whereRaw('ust_id is null')->take(8)->get();
+        $kategoriler = Kategori::where('ust_id', null)->take(8)->get();
         return view('anasayfa', compact('kategoriler'));
     }
 }
