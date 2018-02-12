@@ -18,11 +18,24 @@ Route::get('/urun/{slug_urunadi}', 'UrunController@index')->name('urun');
 Route::post('/ara', 'UrunController@ara')->name('urun_ara');
 Route::get('/ara', 'UrunController@ara')->name('urun_ara');
 Route::get('/sepet', 'SepetController@index')->name('sepet');
-Route::get('/odeme', 'OdemeController@index')->name('odeme');
-Route::get('/siparisler', 'SiparisController@index')->name('siparisler');
-Route::get('/siparisler/{id}', 'SiparisController@detay')->name('siparis');
+
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('/odeme', 'OdemeController@index')->name('odeme');
+    Route::get('/siparisler', 'SiparisController@index')->name('siparisler');
+    Route::get('/siparisler/{id}', 'SiparisController@detay')->name('siparis');
+});
+
 
 Route::group(['prefix' => 'kullanici'], function () {
     Route::get('/oturumac', 'KullaniciController@giris_form')->name('kullanici.oturumac');
+    Route::post('/oturumac', 'KullaniciController@giris');
+    Route::post('/oturumukapat', 'KullaniciController@oturumukapat')->name('kullanici.oturumukapat');
     Route::get('/kaydol', 'KullaniciController@kaydol_form')->name('kullanici.kaydol');
+    Route::post('/kaydol', 'KullaniciController@kaydol');  // isim vermesek de calısırmıs
+});
+
+// Laravel 5.5 ile gelen özellik ile mail viewini test edebiliyoruz
+Route::get('/test/mail', function () {
+    $kullanici = App\Models\Kullanici::find(1);
+    return new App\Mail\KullaniciKayitMail($kullanici);
 });
