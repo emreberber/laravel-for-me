@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateKullaniciTable extends Migration
+class CreateSepetTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,20 +13,14 @@ class CreateKullaniciTable extends Migration
      */
     public function up()
     {
-        Schema::create('kullanici', function (Blueprint $table) {
+        Schema::create('sepet', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('adsoyad', 60);
-            $table->string('email', 150)->unique();
-            $table->string('sifre', 60);
-            $table->string('aktivasyon_anahtari', 60)->nullable();
-            $table->boolean('aktif_mi')->default(0);
-            $table->boolean('yonetici_mi')->default(0);
-            $table->rememberToken();
-
+            $table->integer('kullanici_id')->unsigned();
             $table->timestamp('olusturulma_tarihi')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('guncelleme_tarihi')->default(DB::raw('CURRENT_TIMESTAMP on UPDATE CURRENT_TIMESTAMP'));
-            $table->timestamp('silinme_tarihi')->nullable();    
-                   
+            $table->timestamp('silinme_tarihi')->nullable();  
+
+            $table->foreign('kullanici_id')->references('id')->on('kullanici')->onDelete('cascade');
         });
     }
 
@@ -37,6 +31,6 @@ class CreateKullaniciTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('kullanici');
+        Schema::dropIfExists('sepet');
     }
 }
