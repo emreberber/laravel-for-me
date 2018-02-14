@@ -10,7 +10,7 @@ class Kullanici extends Authenticatable
 {
     use SoftDeletes;
     protected $table = 'kullanici';
-    protected $fillable = ['adsoyad', 'email', 'sifre', 'aktivasyon_anahtari', 'aktif_mi'];
+    protected $fillable = ['adsoyad', 'email', 'sifre', 'aktivasyon_anahtari', 'aktif_mi', 'yonetici_mi'];
     // sorgularda cekilmesini istemiyoruz
     protected $hidden = ['sifre', 'aktivasyon_anahtari'];
 
@@ -23,5 +23,10 @@ class Kullanici extends Authenticatable
     // db'de password kolonu yerine sifre kolonuna bak demiş olduk.
     public function getAuthPassword(){
         return $this->sifre;
+    }
+
+    // Her kullanıcının bir detayı var
+    public function detay(){
+        return $this->hasOne('App\Models\KullaniciDetay')->withDefault();
     }
 }

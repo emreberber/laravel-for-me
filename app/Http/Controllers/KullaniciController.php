@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Kullanici;
+use App\Models\KullaniciDetay;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Mail;
@@ -25,9 +26,16 @@ class KullaniciController extends Controller
             'email' => 'required|email',
             'sifre' => 'required'
         ]);
+        //$kullanici->detay()->save(new KullaniciDetay());  // boş kayıt yapar.
 
         // sifre olarak değil de password olarak göndermemiz gerekiyor
-        if(auth()->attempt(['email'=>request('email'), 'password'=>request('sifre')], request()->has('benihatirla'))){
+        $credentials = [
+            'email'       => request('email'), 
+            'password'    => request('sifre'),
+            'yonetici_mi' => 1,
+            'aktif_mi'    => 1
+        ];
+        if(auth()->attempt($credentials, request()->has('benihatirla'))){
             request()->session()->regenerate();
             // yetki hatası alınca giris sayfasına ; giris yapınca da intented icindeki sayfaya yönlendirilecektir.
             return redirect()->intended('/');
