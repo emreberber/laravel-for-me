@@ -21,4 +21,10 @@ class Kategori extends Model
         return $this->belongsToMany('App\Models\Urun', 'kategori_urun');
         // çokaçok ilişki mevcut.Bir urun birden fazla kategoriye sahip olabilir.
     }
+
+    public function ust_kategori(){
+        return $this->belongsTo('App\Models\Kategori', 'ust_id')->withDefault([
+            'kategori_adi' => 'Ana Kategori'  // ust id'si bulunuyor ise default olarak gönderiyor
+        ]);
+    }
 }
