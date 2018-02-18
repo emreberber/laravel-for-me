@@ -29,6 +29,7 @@
         <thead class="thead-dark">
             <tr>
                 <th>#</th>
+                <th>Resim</th>
                 <th>Slug</th>
                 <th>Ürün Adı</th>
                 <th>Fiyatı</th>
@@ -39,12 +40,15 @@
         <tbody>
             @if(count($list)==0)
                 <tr>
-                    <td colspan="6" class="text-center">Kayıt Bulunamadı</td>
+                    <td colspan="7" class="text-center">Kayıt Bulunamadı</td>
                 </tr>
             @endif
             @foreach ($list as $entry)
             <tr>
                 <td>{{ $entry->id }}</td>
+                <td>
+                <img src="{{$entry->detay->urun_resmi != null ? asset('/uploads/urunler/'.$entry->detay->urun_resmi) : 'http://via.placeholder.com/400x400?text=UrunResmi' }}" class="img-responsive" style="width:120px">
+                </td>
                 <td>{{ $entry->slug }}</td>
                 <td>{{ $entry->urun_adi }}</td>
                 <td>{{ $entry->fiyati }}</td>
